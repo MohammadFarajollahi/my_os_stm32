@@ -34,6 +34,30 @@ void Gsm_check() {
     Serial1.println("sms send");
     Serial2.println("**sms send**");
   }
+  if (GsmData == "+CMS ERROR: 304") {
+    Serial2.println("sms storage full");
+    Serial3.println("AT+CMGD=1,4");
+    delay(500);
+    Serial3.println("AT+CMGF=1");
+    delay(100);
+    Serial3.println("AT+CSMP=17,167,0,0");
+    delay(100);
+    Serial3.println("AT+CSCS=\"GSM\"");
+    delay(100);
+    Serial3.println("ATE0");
+    delay(100);
+    Serial3.println("AT&W");
+    delay(100);
+    // Serial2.println("GSM ERROR");
+    Serial1.println("gsm error");
+    // digitalWrite(GSMPower, 1);
+    // delay(2000);
+    // digitalWrite(GSMPower, 0);
+    // delay(2000);
+    // GsmReadyCount = 0;
+    // GsmReadyTimer = 0;
+    // GsmReady = 0;
+  }
 }
 
 //***************************//
