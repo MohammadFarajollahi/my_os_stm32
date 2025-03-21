@@ -10,6 +10,7 @@ void stm32_uart1() {
     inputData.trim();
     Serial2.println(inputData);
     check_();
+    jasonCheck();
     inputData = "";
     input_data = 0;
   }

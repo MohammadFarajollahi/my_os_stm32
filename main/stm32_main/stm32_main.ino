@@ -1,5 +1,6 @@
 #include <EEPROM.h>
 #include <libmaple/iwdg.h>
+#include <ArduinoJson.h>
 //****eeprom****
 const int addressEEPROM_min = 0;  // Specify the address restrictions you want to use.
 const int addressEEPROM_max = 300;
@@ -30,7 +31,8 @@ int smsReceived = 0;
 void smsInterrupt() {
   if (GsmReady == 1) smsReceived = 1;
 }
-
+int messageSendCheck;
+int messageSendTimer;
 void setup() {
   iwdg_init(IWDG_PRE_256, 2000);
   Serial1.begin(115200);
@@ -38,7 +40,7 @@ void setup() {
   Serial3.begin(115200);
   Serial2.println("STM32 start...");
   pinMode(led, OUTPUT);
-   pinMode(gsmLed, OUTPUT);
+  pinMode(gsmLed, OUTPUT);
   pinMode(GSMPower, OUTPUT);
   pinMode(RI_PIN, INPUT_PULLUP);
 
