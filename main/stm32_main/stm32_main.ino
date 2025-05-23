@@ -8,6 +8,12 @@ const int addressEEPROM_max = 300;
 void timer_(void);
 #define LED_RATE 1000000
 
+///*****clock*****
+#include <Wire.h>
+#include "RTClib.h"
+RTC_DS1307 rtc;
+String daysOfWeek[] = { "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" };
+
 
 String inputData;
 int input_data;
@@ -29,9 +35,19 @@ int p2p = 1;
 int smsReceived = 0;
 int gsmError;
 int simModel;
+
+int smsCheck;
+int SMScheckTimer;
+int smsCheckCount;
+String InputNumber;
+String inputMessage;
+
+String MessNum;
+int esp32chek;
+
 #define RI_PIN PA4  // پایه RI ماژول متصل به PA0
 void smsInterrupt() {
- // if (GsmReady == 1) smsReceived = 1;
+  // if (GsmReady == 1) smsReceived = 1;
 }
 int messageSendCheck;
 int messageSendTimer;
@@ -54,10 +70,20 @@ void setup() {
   serialMode = 1;
   // تنظیم پایه RI به عنوان ورودی
   attachInterrupt(digitalPinToInterrupt(RI_PIN), smsInterrupt, FALLING);  // تنظیم وقفه روی لبه نزولی
+
+  //*****clock*****
+  Wire.begin();
+  rtc.begin();
+  // if (!rtc.isrunning()) {
+  //   Serial2.println("RTC کار نمی‌کند یا تازه تنظیم شده.");
+   //  rtc.adjust(DateTime(F(__DATE__), F(__TIME__)));  // تنظیم اولیه با زمان کامپایل
+  // }
 }
 
 void loop() {
   stm32_uart1();
   stm32_uart2();
   gsm();
+ // Readclock();
+  iwdg_feed();
 }

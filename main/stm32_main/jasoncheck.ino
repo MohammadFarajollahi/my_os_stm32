@@ -19,14 +19,15 @@ void jasonCheck() {
   String extra = jsonDoc["extra"];
 
   // نمایش در سریال مانیتور
-  Serial2.println("type: " + type);
-  Serial2.println("number: " + phone);
-  Serial2.println("messafe: " + message);
-  Serial2.println("extra: " + extra);
+  // Serial2.println("type: " + type);
+  // Serial2.println("number: " + phone);
+  // Serial2.println("messafe: " + message);
+  // Serial2.println("extra: " + extra);
 
-  if(type == "sendSMS"){
+  if (type == "sendSMS") {
+    esp32chek = 0;
     // PhoneNumber = phone;
     // TextMessage = message;
-    sendSMS(phone , message);
+    sendSMS(phone, message);
   }
 }
